@@ -1,4 +1,4 @@
-package com.example.payment_cicd
+package com.test.payment_cicd
 
 import io.flutter.embedding.android.FlutterActivity
 
