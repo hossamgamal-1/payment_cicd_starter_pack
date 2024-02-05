@@ -1,0 +1,69 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  # Mandatory to setup circle ci
+  before_all do
+    setup_circle_ci
+  end
+  
+  desc "Create app on apple developer portal and apple store connect"
+  lane :creat_app do
+    produce(
+      username: '', # hossamnasser938@gmail.com
+      app_identifier: '', # com.mobile.tutorial.cicd
+      app_name: '', # CICDProject
+      language: 'English',
+      app_version: '1.0',
+      sku: '', # cicd_tutorial
+      team_name: '',
+    )
+  end
+
+  # desc "register IOS devices"
+  # lane :register_ios_devices do
+  #   register_devices(
+  #     devices_file: "./fastlane/devices.txt",
+  #     team_name: "Dicotra Tech Ltd",
+  #     username: 'hossamnasser938@gmail.com',
+  #   )
+  # end
+
+  desc "Build IOS App"
+  lane :build_release_ios do
+    # if !is_ci
+    #   register_ios_devices
+    # end
+    match(readonly: is_ci)
+    gym(
+      workspace: "CICDProject.xcworkspace",
+      configuration: "Release",
+      scheme: "CICDProject",
+    )
+  end
+
+  desc "Build IOS and Publish to Firebase App distribution"
+  lane :beta_ios do
+    build_release_ios
+    firebase_app_distribution(
+      app: "",
+      firebase_cli_token: "",
+      groups: ""
+    )
+  end
+
+end
