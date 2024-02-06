@@ -1,3 +1,3 @@
 cd ios
-fastlane beta_ios
+bundle exec fastlane beta_ios
 cd ..
