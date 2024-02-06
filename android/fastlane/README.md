@@ -15,37 +15,45 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
-### android test
+### android build_debug
 
 ```sh
-[bundle exec] fastlane android test
+[bundle exec] fastlane android build_debug
 ```
 
-Runs all the tests
+Build debug APK
 
-### android build_debug_android
+### android build_release
 
 ```sh
-[bundle exec] fastlane android build_debug_android
+[bundle exec] fastlane android build_release
 ```
 
-Prepare Android Debug Build
+Build release APK
 
-### android build_release_android
+### android deploy_to_firebase
 
 ```sh
-[bundle exec] fastlane android build_release_android
+[bundle exec] fastlane android deploy_to_firebase
 ```
 
-Prepare Android Release Build
+Deploy to Firebase App Distribution
 
-### android beta_android
+### android deploy_to_google_play
 
 ```sh
-[bundle exec] fastlane android beta_android
+[bundle exec] fastlane android deploy_to_google_play
 ```
 
-Prepare Android Build & Distribute to Firebase App distribution
+Deploy to Google Play
+
+### android deploy
+
+```sh
+[bundle exec] fastlane android deploy
+```
+
+Deploy to Google Play and Firebase App Distribution
 
 ----
 

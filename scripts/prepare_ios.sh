@@ -3,5 +3,5 @@
 
 cd ios
 bundle install
-bundle exec fastlane install_plugins
+fastlane install_plugins
 cd ..
