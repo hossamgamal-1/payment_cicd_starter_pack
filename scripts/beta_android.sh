@@ -1,3 +1,3 @@
 cd android
-bundle exec fastlane beta_android
+fastlane beta_android
 cd ..
