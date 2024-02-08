@@ -4,6 +4,7 @@ import 'package:payment_cicd/payment/logic/payment_cubit/payment_cubit.dart';
 
 import 'core/dotenv_helper.dart';
 import 'payment/stripe_service.dart';
+import 'paypal/paypal_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,23 @@ class MyHomePage extends StatelessWidget {
         title: const Text('title'),
       ),
       body: null,
-      floatingActionButton: const PaymentButton(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const PaymentButton(),
+          const SizedBox(width: 10),
+          FloatingActionButton(
+            heroTag: 'paypal_payment',
+            onPressed: () {
+              builder(context) => PaypalService().makePayment();
+              final route = MaterialPageRoute(builder: builder);
+              Navigator.of(context).push(route);
+            },
+            tooltip: 'Increment',
+            child: const Text('Paypal'),
+          ),
+        ],
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -66,6 +83,7 @@ class PaymentButton extends StatelessWidget {
         },
         builder: (context, state) {
           return FloatingActionButton(
+            heroTag: 'stripe_payment',
             onPressed: () => context.read<PaymentCubit>().makePayment(),
             tooltip: 'Increment',
             child: state is PaymentInProgress
