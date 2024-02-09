@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class DotEnvHelper {
   const DotEnvHelper._();
 
-  static init() async => await dotenv.load();
+  static Future<void> init() async => await dotenv.load();
 
   static final stripeSecretKey = dotenv.env['STRIPE_TEST_SECRET_KEY']!;
   static final stripePublishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;

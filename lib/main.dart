@@ -1,14 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_cicd/payment/logic/payment_cubit/payment_cubit.dart';
 
 import 'core/dotenv_helper.dart';
+import 'payment/logic/payment_cubit/payment_cubit.dart';
 import 'payment/stripe_service.dart';
+import 'paypal/paypal_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await DotEnvHelper.init();
+  await Future.wait([
+    DotEnvHelper.init(),
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
+  ]);
   // stripe service initialization must be after dotenv loading as it depends on it
   StripeService.init();
 
@@ -21,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: kDebugMode,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -42,7 +49,23 @@ class MyHomePage extends StatelessWidget {
         title: const Text('title'),
       ),
       body: null,
-      floatingActionButton: const PaymentButton(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const PaymentButton(),
+          const SizedBox(width: 10),
+          FloatingActionButton(
+            heroTag: 'paypal_payment',
+            onPressed: () {
+              builder(context) => PaypalService().makePayment();
+              final route = MaterialPageRoute(builder: builder);
+              Navigator.of(context).push(route);
+            },
+            tooltip: 'Increment',
+            child: const Text('Paypal'),
+          ),
+        ],
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -66,6 +89,7 @@ class PaymentButton extends StatelessWidget {
         },
         builder: (context, state) {
           return FloatingActionButton(
+            heroTag: 'stripe_payment',
             onPressed: () => context.read<PaymentCubit>().makePayment(),
             tooltip: 'Increment',
             child: state is PaymentInProgress
