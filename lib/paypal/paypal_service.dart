@@ -1,41 +1,28 @@
 import 'dart:developer';
 
-import 'package:flutter_paypal/flutter_paypal.dart';
-import 'package:payment_cicd/core/dotenv_helper.dart';
-import 'package:payment_cicd/paypal/model/paypal_transaction/paypal_transaction.dart';
+import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
+
+import '../core/dotenv_helper.dart';
+import 'model/paypal_transaction/amount.dart';
+import 'model/paypal_transaction/details.dart';
+import 'model/paypal_transaction/item.dart';
+import 'model/paypal_transaction/item_list.dart';
+import 'model/paypal_transaction/paypal_transaction.dart';
+import 'model/paypal_transaction_input_model.dart';
 
 class PaypalService {
-  UsePaypal makePayment() {
-    final transaction = PaypalTransaction.fromJson(
-      {
-        "amount": {
-          "total": '10.12',
-          "currency": "USD",
-          "details": {
-            "subtotal": '10.12',
-            "shipping": '0',
-            "shipping_discount": 0
-          }
-        },
-        "description": "The payment transaction description.",
-        "item_list": {
-          "items": [
-            {
-              "name": "A demo product",
-              "quantity": 1,
-              "price": '10.12',
-              "currency": "USD"
-            }
-          ],
-        }
-      },
+  PaypalCheckoutView makePayment() {
+    const inputModel = PaypalTransactionInputModel(
+      name: 'Hair Shampoo',
+      currency: 'USD',
+      price: 100,
     );
-    final result = UsePaypal(
+    final transaction = getTransaction(inputModel);
+
+    final result = PaypalCheckoutView(
       sandboxMode: true,
       clientId: DotEnvHelper.paypalClientId,
       secretKey: DotEnvHelper.paypalSecretKey,
-      returnURL: "https://samplesite.com/return",
-      cancelURL: "https://samplesite.com/cancel",
       transactions: [transaction.toJson()],
       note: 'A note for the payment.',
       onSuccess: (params) => log("onSuccess: $params"),
@@ -45,4 +32,32 @@ class PaypalService {
 
     return result;
   }
+}
+
+PaypalTransaction getTransaction(PaypalTransactionInputModel inputModel) {
+  final amount = Amount(
+    currency: inputModel.currency,
+    total: inputModel.total,
+    details: Details(
+      shipping: inputModel.shipping.toString(),
+      subtotal: inputModel.subtotal,
+      shippingDiscount: 0,
+    ),
+  );
+  final itemList = ItemList(
+    items: [
+      Item(
+        currency: inputModel.currency,
+        name: inputModel.name,
+        price: inputModel.price.toString(),
+        quantity: inputModel.quantity,
+      ),
+    ],
+  );
+  final transaction = PaypalTransaction(
+    amount: amount,
+    description: inputModel.description,
+    itemList: itemList,
+  );
+  return transaction;
 }
