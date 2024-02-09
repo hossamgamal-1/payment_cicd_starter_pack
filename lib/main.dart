@@ -1,15 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_cicd/payment/logic/payment_cubit/payment_cubit.dart';
 
 import 'core/dotenv_helper.dart';
+import 'payment/logic/payment_cubit/payment_cubit.dart';
 import 'payment/stripe_service.dart';
 import 'paypal/paypal_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await DotEnvHelper.init();
+  await Future.wait([
+    DotEnvHelper.init(),
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
+  ]);
   // stripe service initialization must be after dotenv loading as it depends on it
   StripeService.init();
 
@@ -22,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: kDebugMode,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
