@@ -2,8 +2,10 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:payment_cicd/core/networking/api_result.dart';
 
-import '../../../core/dotenv_helper.dart';
+import '../../../core/helpers/dotenv_helper.dart';
+import '../../../core/networking/error_handler.dart';
 import 'model/stripe_models/create_customer_input_model.dart';
 import 'model/stripe_models/create_ephemeral_key_input_model.dart';
 import 'model/stripe_models/create_payment_intent_input_model.dart';
@@ -29,19 +31,25 @@ class StripeService {
     Stripe.publishableKey = DotEnvHelper.stripePublishableKey;
   }
 
-  Future<void> makePayment() async {
-    final customer = await _getCustomer();
-    final paymentIntent = await _createPaymentIntent(customer.id);
-    final ephemralKey = await _createEphemeralKey(customer.id);
+  Future<ApiResult<void>> makePayment() async {
+    try {
+      final customer = await _getCustomer();
+      final paymentIntent = await _createPaymentIntent(customer.id);
+      final ephemralKey = await _createEphemeralKey(customer.id);
 
-    final inputModel = InitPaymentSheetInputModel(
-      paymentIntentClientSecret: paymentIntent.clientSecret,
-      customerId: customer.id,
-      ephemeralKeySecret: ephemralKey.secret,
-    );
-    await _initPaymentSheet(inputModel);
+      final inputModel = InitPaymentSheetInputModel(
+        paymentIntentClientSecret: paymentIntent.clientSecret,
+        customerId: customer.id,
+        ephemeralKeySecret: ephemralKey.secret,
+      );
+      await _initPaymentSheet(inputModel);
 
-    await _displayPaymentSheet();
+      await _displayPaymentSheet();
+
+      return const ApiResult.success(null);
+    } catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
   }
 
   Future<PaymentIntentModel> _createPaymentIntent(String customerId) async {

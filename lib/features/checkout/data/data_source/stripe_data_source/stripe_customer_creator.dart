@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
-import '../../../../../core/dio_helper.dart';
-import '../../../../../core/dotenv_helper.dart';
-import '../../../../../core/networking_helper.dart';
+import '../../../../../core/helpers/dotenv_helper.dart';
+import '../../../../../core/networking/dio_helper.dart';
+import '../../../../../core/networking/networking_helper.dart';
 import '../../model/stripe_models/create_customer_input_model.dart';
 
 class StripeCustomerCreator {
