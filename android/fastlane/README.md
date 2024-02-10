@@ -39,10 +39,10 @@ Prepare Android Debug Build
 
 Prepare Android Release Build
 
-### android beta_android
+### android deploy_apk_to_firebase_android
 
 ```sh
-[bundle exec] fastlane android beta_android
+[bundle exec] fastlane android deploy_apk_to_firebase_android
 ```
 
 Prepare Android Build & Distribute to Firebase App distribution
