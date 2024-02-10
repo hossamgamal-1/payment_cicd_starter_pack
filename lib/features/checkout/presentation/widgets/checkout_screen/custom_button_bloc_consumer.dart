@@ -4,39 +4,55 @@ import 'package:payment_cicd/core/extenstions.dart';
 import 'package:payment_cicd/features/checkout/presentation/thank_you_screen.dart';
 
 import '../../../../../../core/widgets/custom_button.dart';
-import '../../../data/paypal_service.dart';
-import '../../../logic/payment_cubit/payment_cubit.dart';
+import '../../../logic/checkout_cubit/checkout_cubit.dart';
+import '../../../logic/checkout_presentation_cubit/checkout_presentation_cubit.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
-  const CustomButtonBlocConsumer({super.key, required this.isPaypal});
+  const CustomButtonBlocConsumer({super.key});
 
-  final bool isPaypal;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PaymentCubit, PaymentState>(
+    final logicCubit = context.read<CheckoutCubit>();
+    final presentationCubit = context.read<CheckoutPresentationCubit>();
+    return BlocConsumer<CheckoutCubit, CheckoutState>(
       listenWhen: (previous, current) {
-        return [PaymentFailure, PaymentSuccess].contains(current.runtimeType);
+        return [CheckoutFailure, CheckoutSuccess].contains(current.runtimeType);
       },
       listener: (context, state) {
         context.pop();
-        if (state is PaymentFailure) {
-          final snackBar = SnackBar(content: Text(state.error));
+        if (state is CheckoutFailure) {
+          final snackBar = SnackBar(
+            content: Center(child: Text(state.error)),
+            behavior: SnackBarBehavior.floating,
+          );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-        if (state is PaymentSuccess) {
+        if (state is CheckoutSuccess) {
+          if (presentationCubit.isPaypal) context.pop();
+
           context.pushReplacement(const ThankYouScreen());
         }
       },
       builder: (context, state) {
         return CustomButton(
           onTap: () {
-            if (isPaypal) {
-              context.push(PaypalService().makePayment(context));
-            } else {
-              context.read<PaymentCubit>().makePayment();
+            final result = logicCubit.makePayment(presentationCubit.isPaypal);
+
+            if (result != null) {
+              context.push(
+                PopScope(
+                  onPopInvoked: (didPop) {
+                    if (didPop && logicCubit.state is CheckoutLoading) {
+                      logicCubit
+                          .emitError('The payment flow has been canceled');
+                    }
+                  },
+                  child: result,
+                ),
+              );
             }
           },
-          isLoading: state is PaymentInProgress,
+          isLoading: state is CheckoutLoading,
           text: 'Continue',
         );
       },

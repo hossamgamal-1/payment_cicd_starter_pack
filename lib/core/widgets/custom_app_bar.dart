@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:payment_cicd/core/extenstions.dart';
-import 'package:payment_cicd/core/svg_helper.dart';
+import 'package:payment_cicd/core/helpers/svg_helper.dart';
 
 import '../utils/styles.dart';
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_cicd/features/checkout/logic/payment_cubit/payment_cubit.dart';
+import 'package:payment_cicd/features/checkout/logic/checkout_cubit/checkout_cubit.dart';
 
 import '../../../../../../core/widgets/custom_button.dart';
+import '../../../logic/checkout_presentation_cubit/checkout_presentation_cubit.dart';
 import '../total_price_widget.dart';
 import 'cart_info_item.dart';
 import 'payment_methods_bottom_sheet.dart';
@@ -36,14 +37,18 @@ class MyCartViewBody extends StatelessWidget {
                 topRight: radiusUnit,
               );
               showModalBottomSheet(
-                  context: context,
-                  shape: const RoundedRectangleBorder(borderRadius: radius),
-                  builder: (context) {
-                    return BlocProvider(
-                      create: (context) => PaymentCubit(),
-                      child: const PaymentMethodsBottomSheet(),
-                    );
-                  });
+                context: context,
+                shape: const RoundedRectangleBorder(borderRadius: radius),
+                builder: (context) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => CheckoutCubit()),
+                      BlocProvider(create: (_) => CheckoutPresentationCubit()),
+                    ],
+                    child: const PaymentMethodsBottomSheet(),
+                  );
+                },
+              );
             },
           ),
           const SizedBox(height: 12),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'core/checkout_app.dart';
-import 'core/dotenv_helper.dart';
+import 'core/helpers/dotenv_helper.dart';
 import 'features/checkout/data/stripe_service.dart';
 
 void main() async {

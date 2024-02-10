@@ -27,8 +27,19 @@ dependencies:
   # Stripe and Paypal payment gatways
   flutter_stripe: ^10.0.0
   flutter_paypal_payment: ^1.0.6
+  
+  # svg image handler
   flutter_svg: ^2.0.9
+
+  # font awesome icons
   font_awesome_flutter: ^10.7.0
+
+  # freezed for immutable classes
+  freezed: ^2.4.7
+  freezed_annotation: ^2.4.1
+
+  # code generation
+  build_runner: ^2.4.8
   
 dev_dependencies:
   flutter_test:
