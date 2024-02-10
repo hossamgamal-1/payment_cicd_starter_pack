@@ -31,7 +31,7 @@ class CustomButtonBlocConsumer extends StatelessWidget {
         return CustomButton(
           onTap: () {
             if (isPaypal) {
-              context.push(PaypalService().makePayment());
+              context.push(PaypalService().makePayment(context));
             } else {
               context.read<PaymentCubit>().makePayment();
             }

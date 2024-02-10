@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
+import 'package:payment_cicd/core/extenstions.dart';
 
 import '../../../core/dotenv_helper.dart';
+import '../presentation/thank_you_screen.dart';
 import 'model/paypal_models/paypal_transaction/amount.dart';
 import 'model/paypal_models/paypal_transaction/details.dart';
 import 'model/paypal_models/paypal_transaction/item.dart';
@@ -11,7 +14,7 @@ import 'model/paypal_models/paypal_transaction/paypal_transaction.dart';
 import 'model/paypal_models/paypal_transaction_input_model.dart';
 
 class PaypalService {
-  PaypalCheckoutView makePayment() {
+  PaypalCheckoutView makePayment(BuildContext context) {
     const inputModel = PaypalTransactionInputModel(
       name: 'Hair Shampoo',
       currency: 'USD',
@@ -25,8 +28,21 @@ class PaypalService {
       secretKey: DotEnvHelper.paypalSecretKey,
       transactions: [transaction.toJson()],
       note: 'A note for the payment.',
-      onSuccess: (params) => log("onSuccess: $params"),
-      onError: (error) => log("onError: $error"),
+      onSuccess: (params) {
+        log("onSuccess: $params");
+        context.pop();
+        context.pop();
+        context.pushReplacement(const ThankYouScreen());
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Payment was successful')),
+        );
+      },
+      onError: (error) {
+        context.pop();
+        context.pop();
+        final snackBar = SnackBar(content: Text(error));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
       onCancel: (params) => log('cancelled: $params'),
     );
 
