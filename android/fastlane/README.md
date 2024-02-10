@@ -39,6 +39,14 @@ Prepare Android Debug Build
 
 Prepare Android Release Build
 
+### android increment_version
+
+```sh
+[bundle exec] fastlane android increment_version
+```
+
+increment version code for android build
+
 ### android deploy_apk_to_firebase_android
 
 ```sh
