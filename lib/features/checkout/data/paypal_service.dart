@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 
-import '../core/dotenv_helper.dart';
-import 'model/paypal_transaction/amount.dart';
-import 'model/paypal_transaction/details.dart';
-import 'model/paypal_transaction/item.dart';
-import 'model/paypal_transaction/item_list.dart';
-import 'model/paypal_transaction/paypal_transaction.dart';
-import 'model/paypal_transaction_input_model.dart';
+import '../../../core/dotenv_helper.dart';
+import 'model/paypal_models/paypal_transaction/amount.dart';
+import 'model/paypal_models/paypal_transaction/details.dart';
+import 'model/paypal_models/paypal_transaction/item.dart';
+import 'model/paypal_models/paypal_transaction/item_list.dart';
+import 'model/paypal_models/paypal_transaction/paypal_transaction.dart';
+import 'model/paypal_models/paypal_transaction_input_model.dart';
 
 class PaypalService {
   PaypalCheckoutView makePayment() {

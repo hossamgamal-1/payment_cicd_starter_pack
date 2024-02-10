@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/dio_helper.dart';
-import '../../../core/dotenv_helper.dart';
-import '../../../core/networking_helper.dart';
-import '../../model/create_payment_intent_input_model.dart';
+import '../../../../../core/dio_helper.dart';
+import '../../../../../core/dotenv_helper.dart';
+import '../../../../../core/networking_helper.dart';
+import '../../model/stripe_models/create_payment_intent_input_model.dart';
 
 class StripePaymentIntentCreator {
   final Dio _dio = DioHelper.instance;
