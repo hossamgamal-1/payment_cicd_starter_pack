@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../stripe_service.dart';
+import '../../data/stripe_service.dart';
 
 part 'payment_state.dart';
 

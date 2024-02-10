@@ -3,15 +3,15 @@ import 'dart:math' as math;
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-import '../core/dotenv_helper.dart';
-import 'data/repos/stripe_repo.dart';
-import 'model/create_customer_input_model.dart';
-import 'model/create_ephemeral_key_input_model.dart';
-import 'model/create_payment_intent_input_model.dart';
-import 'model/customer_stripe/customer_stripe.dart';
-import 'model/init_payment_sheet_input_model.dart';
-import 'model/payment_intent_model/payment_intent_model.dart';
-import 'model/stripe_ephemral_key/stripe_ephemral_key.dart';
+import '../../../core/dotenv_helper.dart';
+import 'model/stripe_models/create_customer_input_model.dart';
+import 'model/stripe_models/create_ephemeral_key_input_model.dart';
+import 'model/stripe_models/create_payment_intent_input_model.dart';
+import 'model/stripe_models/customer_stripe/customer_stripe.dart';
+import 'model/stripe_models/init_payment_sheet_input_model.dart';
+import 'model/stripe_models/payment_intent_model/payment_intent_model.dart';
+import 'model/stripe_models/stripe_ephemral_key/stripe_ephemral_key.dart';
+import 'repo/stripe_repos/stripe_repo.dart';
 
 class StripeService {
   StripeService._();
@@ -82,6 +82,7 @@ class StripeService {
       await Stripe.instance.presentPaymentSheet();
     } catch (e) {
       log('payment sheet error: $e');
+      rethrow;
     }
   }
 }
