@@ -24,6 +24,6 @@ jobs:
   #         path: output/scan
 
 workflows:
-  build-test-adhoc:
+  beta-android-workflow:
     jobs:
       - beta-android
