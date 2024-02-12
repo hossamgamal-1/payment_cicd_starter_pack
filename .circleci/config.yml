@@ -4,7 +4,7 @@ jobs:
 
   beta-android:
     docker:
-      - image: circleci/android:api-30-node
+      - image: cimg/android:api-30-node
     steps:
       - checkout
       - run: bash scripts/beta_android.sh
