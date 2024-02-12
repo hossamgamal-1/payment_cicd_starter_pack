@@ -1,4 +1,6 @@
 .env
+project_key
+project_key.pub
 
 # Miscellaneous
 *.class

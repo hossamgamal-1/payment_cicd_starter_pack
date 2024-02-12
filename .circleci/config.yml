@@ -1,0 +1,29 @@
+# .circleci/config.yml
+version: 2.1
+jobs:
+
+  beta-android:
+    docker:
+      - image: circleci/android:api-30-node
+    steps:
+      - checkout
+      - run: bash scripts/beta_android.sh
+
+  # build-and-test:
+  #   macos:
+  #     xcode: 14.0.1
+  #   steps:
+  #     - checkout
+  #     - run: bundle install
+  #     - run:
+  #         name: Fastlane
+  #         command: bundle exec fastlane $FASTLANE_LANE
+  #     - store_artifacts:
+  #         path: output
+  #     - store_test_results:
+  #         path: output/scan
+
+workflows:
+  build-test-adhoc:
+    jobs:
+      - beta-android
