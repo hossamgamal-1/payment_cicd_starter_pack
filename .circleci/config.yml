@@ -1,13 +1,35 @@
 # .circleci/config.yml
 version: 2.1
 
+orbs:
+  android: circleci/android@1.0.3
+  flutter: circleci/flutter@2.0.2
+
 jobs:
   beta-android:
     docker:
-      - image: gmemstr/flutter-fastlane-android:29.0
+      - image: cimg/android:2024.01
     steps:
       - checkout
+      - flutter/install_sdk_and_pub:
+          version: 3.16.5
+      - flutter/install_android_gradle_dependencies
+      - flutter/install_android_gem
       - run: bash scripts/beta_android.sh
+
+  # build-and-test:
+  #   macos:
+  #     xcode: 14.0.1
+  #   steps:
+  #     - checkout
+  #     - run: bundle install
+  #     - run:
+  #         name: Fastlane
+  #         command: bundle exec fastlane $FASTLANE_LANE
+  #     - store_artifacts:
+  #         path: output
+  #     - store_test_results:
+  #         path: output/scan
 
 workflows:
   beta-android-workflow:
