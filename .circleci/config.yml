@@ -4,7 +4,7 @@ jobs:
 
   beta-android:
     docker:
-      - image: cimg/android
+      - image: cimg/android:2024.01
     steps:
       - checkout
       - run: bash scripts/beta_android.sh
