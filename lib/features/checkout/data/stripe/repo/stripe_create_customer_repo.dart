@@ -8,9 +8,9 @@ class StripeGetCustomerRepo {
     if (cachedCustomer != null) return cachedCustomer;
 
     final response = await _customerCreator.createCustomer(inputModel);
-    final customer = CustomerStripe.fromJson(response.data);
+    final createdCustomer = CustomerStripe.fromJson(response.data);
+    FlutterSecureStorageHelper.setCustomerStripe(createdCustomer);
 
-    FlutterSecureStorageHelper.setCustomerStripe(customer);
-    return customer;
+    return createdCustomer;
   }
 }

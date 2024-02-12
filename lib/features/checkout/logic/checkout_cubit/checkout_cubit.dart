@@ -2,34 +2,36 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_cicd/features/checkout/data/paypal_service.dart';
+import 'package:payment_cicd/features/checkout/data/web_view_payment_gatway.dart';
 
-import '../../data/stripe_service.dart';
+import '../../data/stripe/stripe_service.dart';
+import '../payment_gateway_factory.dart';
 
 part 'checkout_state.dart';
 
 class CheckoutCubit extends Cubit<CheckoutState> {
-  final StripeService _stripeService = StripeService.instance;
-  static const PaypalService _paypalService = PaypalService.instance;
-  CheckoutCubit() : super(const Initial());
+  final StripeService _stripeService;
+  CheckoutCubit(this._stripeService) : super(const Initial());
 
-  Widget? makePayment(bool isPaypal) {
+  Future<Widget?> makePayment(int activeIndex) async {
     emit(CheckoutLoading());
 
-    if (isPaypal) {
-      final page = _makePaypalPayment();
+    final PaymentGateway gateWay = PaymentGatewayFactory.get(activeIndex);
+
+    if (gateWay is WebViewPaymentGateway) {
+      final page = await _getPaymentPage(gateWay);
       return page;
     } else {
-      _makeStripePayment();
+      await _makePayment();
     }
     return null;
   }
 
-  void _makeStripePayment() async {
+  Future<void> _makePayment() async {
     final result = await _stripeService.makePayment();
 
     result.when(
-      success: (success) => emit(CheckoutSuccess()),
+      success: (success) => emit(const CheckoutSuccess()),
       failure: (handler) {
         final message = handler.errorModel.message ?? 'Error occurred';
         emit(CheckoutFailure(message));
@@ -37,11 +39,12 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     );
   }
 
-  Widget _makePaypalPayment() {
-    final result = _paypalService.makePayment(
-      onSuccess: (params) => emit(CheckoutSuccess()),
+  Future<Widget> _getPaymentPage(WebViewPaymentGateway gateway) async {
+    final result = await gateway.getPaymentPage(
+      onSuccess: (params) => emit(const CheckoutSuccess()),
       onError: (error) {
-        emit(CheckoutFailure(error is String ? error : 'Error occurred'));
+        final errMessage = error is String ? error : 'Error occurred';
+        emit(CheckoutFailure(errMessage));
       },
       onCancel: (_) => emit(const CheckoutFailure('Cancelled')),
     );

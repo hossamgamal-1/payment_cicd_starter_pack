@@ -10,4 +10,9 @@ class DotEnvHelper {
 
   static final paypalClientId = dotenv.env['PAYPAL_CLIENT_ID']!;
   static final paypalSecretKey = dotenv.env['PAYPAL_SECRET_KEY']!;
+
+  static final paymobApiKey = dotenv.env['PAYMOB_API_KEY']!;
+
+  static final paymobIntegrationId =
+      int.parse(dotenv.env['PAYMOB_ONLINE_CARD_INTEGRATION_ID']!);
 }

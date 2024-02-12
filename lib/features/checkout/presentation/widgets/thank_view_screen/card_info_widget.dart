@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:payment_cicd/core/helpers/svg_helper.dart';
+
+import '../../../../../core/helpers/svg_helper.dart';
 
 class CardInfoWidget extends StatelessWidget {
   const CardInfoWidget({super.key});

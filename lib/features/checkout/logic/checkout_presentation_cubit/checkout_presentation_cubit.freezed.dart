@@ -19,19 +19,19 @@ mixin _$CheckoutPresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool isPaypal) paymentMethodChanged,
+    required TResult Function(int activeIndex) paymentMethodChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool isPaypal)? paymentMethodChanged,
+    TResult? Function(int activeIndex)? paymentMethodChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool isPaypal)? paymentMethodChanged,
+    TResult Function(int activeIndex)? paymentMethodChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,7 +114,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool isPaypal) paymentMethodChanged,
+    required TResult Function(int activeIndex) paymentMethodChanged,
   }) {
     return initial();
   }
@@ -123,7 +123,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool isPaypal)? paymentMethodChanged,
+    TResult? Function(int activeIndex)? paymentMethodChanged,
   }) {
     return initial?.call();
   }
@@ -132,7 +132,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool isPaypal)? paymentMethodChanged,
+    TResult Function(int activeIndex)? paymentMethodChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -183,7 +183,7 @@ abstract class _$$PaymentMethodChangedImplCopyWith<$Res> {
           $Res Function(_$PaymentMethodChangedImpl) then) =
       __$$PaymentMethodChangedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool isPaypal});
+  $Res call({int activeIndex});
 }
 
 /// @nodoc
@@ -198,13 +198,13 @@ class __$$PaymentMethodChangedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isPaypal = null,
+    Object? activeIndex = null,
   }) {
     return _then(_$PaymentMethodChangedImpl(
-      null == isPaypal
-          ? _value.isPaypal
-          : isPaypal // ignore: cast_nullable_to_non_nullable
-              as bool,
+      null == activeIndex
+          ? _value.activeIndex
+          : activeIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -212,14 +212,14 @@ class __$$PaymentMethodChangedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PaymentMethodChangedImpl implements PaymentMethodChanged {
-  _$PaymentMethodChangedImpl(this.isPaypal);
+  _$PaymentMethodChangedImpl(this.activeIndex);
 
   @override
-  final bool isPaypal;
+  final int activeIndex;
 
   @override
   String toString() {
-    return 'CheckoutPresentationState.paymentMethodChanged(isPaypal: $isPaypal)';
+    return 'CheckoutPresentationState.paymentMethodChanged(activeIndex: $activeIndex)';
   }
 
   @override
@@ -227,12 +227,12 @@ class _$PaymentMethodChangedImpl implements PaymentMethodChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PaymentMethodChangedImpl &&
-            (identical(other.isPaypal, isPaypal) ||
-                other.isPaypal == isPaypal));
+            (identical(other.activeIndex, activeIndex) ||
+                other.activeIndex == activeIndex));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isPaypal);
+  int get hashCode => Object.hash(runtimeType, activeIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -246,29 +246,29 @@ class _$PaymentMethodChangedImpl implements PaymentMethodChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool isPaypal) paymentMethodChanged,
+    required TResult Function(int activeIndex) paymentMethodChanged,
   }) {
-    return paymentMethodChanged(isPaypal);
+    return paymentMethodChanged(activeIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool isPaypal)? paymentMethodChanged,
+    TResult? Function(int activeIndex)? paymentMethodChanged,
   }) {
-    return paymentMethodChanged?.call(isPaypal);
+    return paymentMethodChanged?.call(activeIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool isPaypal)? paymentMethodChanged,
+    TResult Function(int activeIndex)? paymentMethodChanged,
     required TResult orElse(),
   }) {
     if (paymentMethodChanged != null) {
-      return paymentMethodChanged(isPaypal);
+      return paymentMethodChanged(activeIndex);
     }
     return orElse();
   }
@@ -306,10 +306,10 @@ class _$PaymentMethodChangedImpl implements PaymentMethodChanged {
 }
 
 abstract class PaymentMethodChanged implements CheckoutPresentationState {
-  factory PaymentMethodChanged(final bool isPaypal) =
+  factory PaymentMethodChanged(final int activeIndex) =
       _$PaymentMethodChangedImpl;
 
-  bool get isPaypal;
+  int get activeIndex;
   @JsonKey(ignore: true)
   _$$PaymentMethodChangedImplCopyWith<_$PaymentMethodChangedImpl>
       get copyWith => throw _privateConstructorUsedError;
