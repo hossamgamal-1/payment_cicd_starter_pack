@@ -2,24 +2,23 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:payment_cicd/core/networking/api_result.dart';
 
-import '../../../core/helpers/dotenv_helper.dart';
-import '../../../core/networking/error_handler.dart';
-import 'model/stripe_models/create_customer_input_model.dart';
-import 'model/stripe_models/create_ephemeral_key_input_model.dart';
-import 'model/stripe_models/create_payment_intent_input_model.dart';
-import 'model/stripe_models/customer_stripe/customer_stripe.dart';
-import 'model/stripe_models/init_payment_sheet_input_model.dart';
-import 'model/stripe_models/payment_intent_model/payment_intent_model.dart';
-import 'model/stripe_models/stripe_ephemral_key/stripe_ephemral_key.dart';
-import 'repo/stripe_repos/stripe_repo.dart';
+import '../../../../core/helpers/dotenv_helper.dart';
+import '../../../../core/networking/api_result.dart';
+import '../../../../core/networking/error_handler.dart';
+import '../web_view_payment_gatway.dart';
+import 'model/create_customer_input_model.dart';
+import 'model/create_ephemeral_key_input_model.dart';
+import 'model/create_payment_intent_input_model.dart';
+import 'model/customer_stripe/customer_stripe.dart';
+import 'model/init_payment_sheet_input_model.dart';
+import 'model/payment_intent_model/payment_intent_model.dart';
+import 'model/stripe_ephemral_key/stripe_ephemral_key.dart';
+import 'repo/stripe_repo.dart';
 
-class StripeService {
-  StripeService._();
-  static final instance = StripeService._();
-
-  final _stripeRepo = StripeRepo();
+class StripeService implements PaymentGateway {
+  final StripeRepo _stripeRepo;
+  const StripeService(this._stripeRepo);
 
   static const _amount = 100;
   static const _currency = 'usd';

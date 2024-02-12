@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:payment_cicd/core/extenstions.dart';
 
+import '../../core/extenstions.dart';
 import '../checkout/presentation/checkout_screen.dart';
 
 class HomeScreen extends StatelessWidget {

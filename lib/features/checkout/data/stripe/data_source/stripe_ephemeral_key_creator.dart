@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 
-import '../../../../../core/helpers/dotenv_helper.dart';
-import '../../../../../core/networking/dio_helper.dart';
-import '../../../../../core/networking/networking_helper.dart';
-import '../../model/stripe_models/create_ephemeral_key_input_model.dart';
+import '../../../../../../core/helpers/dotenv_helper.dart';
+import '../../../../../../core/networking/dio_helper.dart';
+import '../../../../../../core/networking/networking_helper.dart';
+import '../model/create_ephemeral_key_input_model.dart';
 
 class StripeEphemeralKeyCreator {
   final Dio _dio = DioHelper.instance;

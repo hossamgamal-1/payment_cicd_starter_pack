@@ -19,9 +19,7 @@ class PaymentMethodsListView extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: GestureDetector(
-                onTap: () {
-                  read.updatePaymentMethod(index);
-                },
+                onTap: () => read.updatePaymentMethod(index),
                 child: BlocBuilder<CheckoutPresentationCubit,
                     CheckoutPresentationState>(
                   buildWhen: (previous, current) =>

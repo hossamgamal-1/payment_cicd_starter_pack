@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_cicd/features/checkout/logic/checkout_cubit/checkout_cubit.dart';
 
 import '../../../../../../core/widgets/custom_button.dart';
+import '../../../data/stripe/repo/stripe_repo.dart';
+import '../../../data/stripe/stripe_service.dart';
+import '../../../logic/checkout_cubit/checkout_cubit.dart';
 import '../../../logic/checkout_presentation_cubit/checkout_presentation_cubit.dart';
 import '../total_price_widget.dart';
 import 'cart_info_item.dart';
@@ -42,7 +44,10 @@ class MyCartViewBody extends StatelessWidget {
                 builder: (context) {
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(create: (_) => CheckoutCubit()),
+                      BlocProvider(
+                        create: (_) =>
+                            CheckoutCubit(StripeService(StripeRepo())),
+                      ),
                       BlocProvider(create: (_) => CheckoutPresentationCubit()),
                     ],
                     child: const PaymentMethodsBottomSheet(),

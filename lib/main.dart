@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'core/checkout_app.dart';
 import 'core/helpers/dotenv_helper.dart';
-import 'features/checkout/data/stripe_service.dart';
+import 'features/checkout/data/stripe/stripe_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

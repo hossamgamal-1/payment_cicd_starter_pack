@@ -1,30 +1,32 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 
-import '../../../core/helpers/dotenv_helper.dart';
-import 'model/paypal_models/paypal_transaction/amount.dart';
-import 'model/paypal_models/paypal_transaction/details.dart';
-import 'model/paypal_models/paypal_transaction/item.dart';
-import 'model/paypal_models/paypal_transaction/item_list.dart';
-import 'model/paypal_models/paypal_transaction/paypal_transaction.dart';
-import 'model/paypal_models/paypal_transaction_input_model.dart';
+import '../../../../core/helpers/dotenv_helper.dart';
+import '../web_view_payment_gatway.dart';
+import 'paypal_models/paypal_transaction/amount.dart';
+import 'paypal_models/paypal_transaction/details.dart';
+import 'paypal_models/paypal_transaction/item.dart';
+import 'paypal_models/paypal_transaction/item_list.dart';
+import 'paypal_models/paypal_transaction/paypal_transaction.dart';
+import 'paypal_models/paypal_transaction_input_model.dart';
 
-class PaypalService {
-  static const instance = PaypalService._();
-  const PaypalService._();
+class PaypalService implements WebViewPaymentGateway {
+  const PaypalService();
 
-  PaypalCheckoutView makePayment({
+  @override
+  Future<Widget> getPaymentPage({
     required Function(dynamic) onSuccess,
     required Function(dynamic) onError,
     Function(dynamic)? onCancel,
-  }) {
+  }) async {
     const inputModel = PaypalTransactionInputModel(
       name: 'Hair Shampoo',
       currency: 'USD',
       price: 100,
     );
-    final transaction = getTransaction(inputModel);
+    final transaction = _getTransaction(inputModel);
 
     final result = PaypalCheckoutView(
       sandboxMode: true,
@@ -41,7 +43,7 @@ class PaypalService {
   }
 }
 
-PaypalTransaction getTransaction(PaypalTransactionInputModel inputModel) {
+PaypalTransaction _getTransaction(PaypalTransactionInputModel inputModel) {
   final amount = Amount(
     currency: inputModel.currency,
     total: inputModel.total,

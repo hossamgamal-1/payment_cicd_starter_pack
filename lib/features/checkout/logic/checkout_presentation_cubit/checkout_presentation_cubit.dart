@@ -9,18 +9,17 @@ part 'checkout_presentation_state.dart';
 class CheckoutPresentationCubit extends Cubit<CheckoutPresentationState> {
   CheckoutPresentationCubit() : super(const _Initial());
 
-  bool isPaypal = false;
   int activeIndex = 0;
 
   void updatePaymentMethod(int index) {
     activeIndex = index;
-    isPaypal = index != 0;
-    emit(PaymentMethodChanged(isPaypal));
+    emit(PaymentMethodChanged(activeIndex));
   }
 
   final List<String> paymentMethodsItems = const [
     'assets/images/card.svg',
-    'assets/images/paypal.svg'
+    'assets/images/paypal.svg',
+    'assets/images/paypal.svg',
   ];
 
   @override

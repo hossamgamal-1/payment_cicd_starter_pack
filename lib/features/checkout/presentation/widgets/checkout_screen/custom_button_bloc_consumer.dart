@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_cicd/core/extenstions.dart';
-import 'package:payment_cicd/features/checkout/presentation/thank_you_screen.dart';
 
 import '../../../../../../core/widgets/custom_button.dart';
+import '../../../../../core/extenstions.dart';
 import '../../../logic/checkout_cubit/checkout_cubit.dart';
 import '../../../logic/checkout_presentation_cubit/checkout_presentation_cubit.dart';
+import '../../thank_you_screen.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
   const CustomButtonBlocConsumer({super.key});
@@ -28,15 +28,18 @@ class CustomButtonBlocConsumer extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
         if (state is CheckoutSuccess) {
-          if (presentationCubit.isPaypal) context.pop();
+          if (presentationCubit.activeIndex > 0) context.pop();
 
           context.pushReplacement(const ThankYouScreen());
         }
       },
       builder: (context, state) {
         return CustomButton(
-          onTap: () {
-            final result = logicCubit.makePayment(presentationCubit.isPaypal);
+          onTap: () async {
+            final result =
+                await logicCubit.makePayment(presentationCubit.activeIndex);
+
+            if (!context.mounted) return;
 
             if (result != null) {
               context.push(

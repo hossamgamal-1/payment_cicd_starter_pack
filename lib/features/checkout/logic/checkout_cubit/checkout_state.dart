@@ -8,7 +8,10 @@ class Initial implements CheckoutState {
 
 class CheckoutLoading implements CheckoutState {}
 
-class CheckoutSuccess implements CheckoutState {}
+class CheckoutSuccess implements CheckoutState {
+  final Widget? page;
+  const CheckoutSuccess([this.page]);
+}
 
 class CheckoutFailure implements CheckoutState {
   final String error;

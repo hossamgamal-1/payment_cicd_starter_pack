@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../features/checkout/data/model/stripe_models/customer_stripe/customer_stripe.dart';
+import '../../features/checkout/data/stripe/model/customer_stripe/customer_stripe.dart';
 
 class FlutterSecureStorageHelper {
   static const _aOptions = AndroidOptions(encryptedSharedPreferences: true);
