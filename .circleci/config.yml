@@ -11,8 +11,6 @@ jobs:
     steps:
       - checkout
       - flutter/install_sdk_and_pub: version: 3.16.5
-      - flutter/install_android_gradle_dependencies
-      - flutter/install_android_gem
       - run: bash scripts/beta_android.sh
 
   # build-and-test:
