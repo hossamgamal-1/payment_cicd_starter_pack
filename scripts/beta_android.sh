@@ -1,3 +1,4 @@
+cd ..
 cd android
 ./gradlew clean
 bundle install
