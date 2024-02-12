@@ -37,7 +37,6 @@ platform :android do
   lane :build_release_android do
     gradle(
       task: "assembleRelease",
-      project_dir: 'android/',
     )
   end
 
