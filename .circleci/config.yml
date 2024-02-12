@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   beta-android:
     docker:
-      - image: gmemstr/flutter-fastlane-android:34.0
+      - image: gmemstr/flutter-fastlane-android:29.0
     steps:
       - checkout
       - run: bash scripts/beta_android.sh
