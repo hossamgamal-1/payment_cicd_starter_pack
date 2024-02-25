@@ -22,9 +22,21 @@ jobs:
         with:
           flutter-version: '3.16.5'
           channel: 'stable'
+      - name: Create .env file
+        run: |
+          cat > .env <<EOF
+          STRIPE_TEST_SECRET_KEY = ${{ secrets.STRIPE_TEST_SECRET_KEY }}
+          STRIPE_PUBLISHABLE_KEY = ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          PAYPAL_CLIENT_ID = ${{ secrets.PAYPAL_CLIENT_ID }}
+          PAYPAL_SECRET_KEY = ${{ secrets.PAYPAL_SECRET_KEY }}
+          PAYMOB_API_KEY = ${{ secrets.PAYMOB_API_KEY }}
+          PAYMOB_ONLINE_CARD_INTEGRATION_ID = ${{ secrets.PAYMOB_ONLINE_CARD_INTEGRATION_ID }}
+          PAYMOB_IFRAME_ID = ${{ secrets.PAYMOB_IFRAME_ID }}
+          EOF
+
       - run: flutter pub get
       # - run: flutter test
-      - run: flutter build apk --release
+      # - run: flutter build apk --release
       # - run: |
       #     flutter build ios --no-codesign
       #     cd build/ios/iphoneos
