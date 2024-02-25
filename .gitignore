@@ -1,6 +1,7 @@
 .env
 project_key
 project_key.pub
+android/app/keystore_base64_encoded.txt
 
 # Miscellaneous
 *.class

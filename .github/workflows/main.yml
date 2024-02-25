@@ -34,9 +34,17 @@ jobs:
           PAYMOB_IFRAME_ID = ${{ secrets.PAYMOB_IFRAME_ID }}
           EOF
 
+      - name: Decode Keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'android/app/keystore.jks'
+          encodedString: ${{ secrets.KEYSTORE }}
+
       - run: flutter pub get
       # - run: flutter test
-      - run: flutter build apk --release
+
+      # - run: flutter build apk --release
+
       # - run: |
       #     flutter build ios --no-codesign
       #     cd build/ios/iphoneos
@@ -48,18 +56,18 @@ jobs:
 
       # - run: scripts/beta_android.sh
 
-      # - name: Install Fastlane
-      #   run: |
-      #     gem install bundler
-      #     bundle install
-      #     bundle exec fastlane install_plugins
+      - name: Install Fastlane
+        run: |
+          gem install bundler
+          bundle install
+          bundle exec fastlane install_plugins
 
-      # - name: Deploy to Android Firebase App Distribution
-      #   run: |
-      #     android
-      #     ./gradlew clean
-      #     bundle exec fastlane deploy_apk_to_firebase_android
-      #     cd ..
+      - name: Deploy to Android Firebase App Distribution
+        run: |
+          android
+          ./gradlew clean
+          bundle exec fastlane deploy_apk_to_firebase_android
+          cd ..
 
       # - name: Push to Releases
       #   uses: ncipollo/release-action@v2
