@@ -56,11 +56,11 @@ jobs:
 
       # - run: scripts/beta_android.sh
 
-      - name: Install Fastlane
-        run: |
-          gem install bundler
-          bundle install
-          bundle exec fastlane install_plugins
+      # - name: Install Fastlane
+      #   run: |
+      #     gem install bundler
+      #     bundle install
+      #     bundle exec fastlane install_plugins
 
       - name: Deploy to Android Firebase App Distribution
         run: |
