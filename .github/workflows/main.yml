@@ -40,6 +40,12 @@ jobs:
           fileName: 'android/app/keystore.jks'
           encodedString: ${{ secrets.KEYSTORE }}
 
+      - name: Decode key.properties
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'android/key.properties'
+          encodedString: ${{ secrets.KEY_PROPERTIES }}
+
       - run: flutter pub get
       # - run: flutter test
 
