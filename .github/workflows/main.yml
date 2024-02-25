@@ -64,9 +64,11 @@ jobs:
 
       - name: Deploy to Android Firebase App Distribution
         run: |
+          flutter build apk --release
           cd android
           bundle install
           bundle exec fastlane install_plugins
+          bundle exec fastlane increment_version
           bundle exec fastlane deploy_apk_to_firebase_android
           cd ..
 
