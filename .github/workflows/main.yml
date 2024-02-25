@@ -64,7 +64,7 @@ jobs:
 
       - name: Deploy to Android Firebase App Distribution
         run: |
-          android
+          cd android
           ./gradlew clean
           bundle install
           bundle exec fastlane install_plugins
