@@ -16,6 +16,7 @@
 default_platform(:android)
 
 platform :android do
+
   desc "Runs all the tests"
   lane :test do
     print "Fastlane works successfully"
@@ -38,21 +39,20 @@ platform :android do
   desc "increment version code for android build"
   lane :increment_version do
     latest_release = firebase_app_distribution_get_latest_release(
-      app: "1:742795928529:android:c7a58cc62380fcfd3936f0"
+      app: "1:742795928529:android:c7a58cc62380fcfd3936f0",
+      firebase_cli_token: "1//03bgve6KRkTdICgYIARAAGAMSNwF-L9IrnARPyhzIGci_3zUegIRghbVagZeLisoNv9xT_8MEsYPWQIbFz21G9S6nbYjiUIWw5zw",
     )
     increment_version_code({ version_code: latest_release[:buildVersion].to_i + 1 })
   end
 
   desc "Prepare Android Build & Distribute to Firebase App distribution"
   lane :deploy_apk_to_firebase_android do 
-    increment_version
-    build_release_android
     firebase_app_distribution(
       app: "1:742795928529:android:c7a58cc62380fcfd3936f0",
       firebase_cli_token: "1//03bgve6KRkTdICgYIARAAGAMSNwF-L9IrnARPyhzIGci_3zUegIRghbVagZeLisoNv9xT_8MEsYPWQIbFz21G9S6nbYjiUIWw5zw",
       groups: "payment_testers",
       android_artifact_type: "APK",
-      apk_path: "../build/app/outputs/apk/release/app-release.apk",
+      apk_path: "build/app/outputs/flutter-apk/app-release.apk",
     )
   end
 end
